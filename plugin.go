@@ -15,7 +15,7 @@ type Tsdb struct {
 	plugin.NetRPCUnsupportedPlugin
 }
 
-func (Tsdb) Query(ctx context.Context, req *proto.TsdbQuery) (*proto.Response, error) {
+func (t *Tsdb) Query(ctx context.Context, req *proto.TsdbQuery) (*proto.Response, error) {
 	log.Print("Tsdb.Get() from plugin")
 
 	return &proto.Response{
@@ -41,11 +41,11 @@ func main() {
 	plugin.Serve(&plugin.ServeConfig{
 		HandshakeConfig: plugin.HandshakeConfig{
 			ProtocolVersion:  1,
-			MagicCookieKey:   "BASIC_PLUGIN",
-			MagicCookieValue: "hello",
+			MagicCookieKey:   "GRAFANA_BACKEND_DATASOURCE",
+			MagicCookieValue: "55d2200a-6492-493a-9353-73b728d468aa",
 		},
 		Plugins: map[string]plugin.Plugin{
-			"grafana-mock-backend-datasource": &shared.TsdbPluginImpl{Plugin: &Tsdb{}},
+			"backend-datasource": &shared.TsdbPluginImpl{Plugin: &Tsdb{}},
 		},
 
 		// A non-nil value here enables gRPC serving for this plugin...
