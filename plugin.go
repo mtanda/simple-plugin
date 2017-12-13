@@ -22,6 +22,7 @@ func (t *Tsdb) Query(ctx context.Context, req *proto.TsdbQuery) (*proto.Response
 		Message: "from plugins! meta meta",
 		Results: []*proto.QueryResult{
 			&proto.QueryResult{
+				RefId: "A",
 				Series: []*proto.TimeSeries{
 					&proto.TimeSeries{
 						Name: "serie 1",
