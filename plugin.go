@@ -22,8 +22,8 @@ func (Tsdb) Query(ctx context.Context, req *proto.TsdbQuery) (*proto.Response, e
 		Message: "from plugins! meta meta",
 		Results: []*proto.QueryResult{
 			&proto.QueryResult{
-				Series: []*proto.TsdbSeries{
-					&proto.TsdbSeries{
+				Series: []*proto.TimeSeries{
+					&proto.TimeSeries{
 						Name: "serie 1",
 						Tags: map[string]string{
 							"key1": "value1",
