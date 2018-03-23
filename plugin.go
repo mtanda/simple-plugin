@@ -1,13 +1,12 @@
 package main
 
 import (
-	"github.com/golang/protobuf/ptypes"
+	"log"
+	"time"
+
 	"golang.org/x/net/context"
 
-	"log"
-
-	proto "github.com/grafana/grafana/pkg/tsdb/models"
-	shared "github.com/grafana/grafana/pkg/tsdb/models/proxy"
+	"github.com/grafana/grafana-plugin-model/go/datasource"
 	plugin "github.com/hashicorp/go-plugin"
 )
 
@@ -15,22 +14,21 @@ type Tsdb struct {
 	plugin.NetRPCUnsupportedPlugin
 }
 
-func (t *Tsdb) Query(ctx context.Context, req *proto.TsdbQuery) (*proto.Response, error) {
+func (t *Tsdb) Query(ctx context.Context, req *datasource.DatasourceRequest) (*datasource.DatasourceResponse, error) {
 	log.Print("Tsdb.Get() from plugin")
 
-	return &proto.Response{
-		Message: "from plugins! meta meta",
-		Results: []*proto.QueryResult{
-			&proto.QueryResult{
+	return &datasource.DatasourceResponse{
+		Results: []*datasource.QueryResult{
+			&datasource.QueryResult{
 				RefId: "A",
-				Series: []*proto.TimeSeries{
-					&proto.TimeSeries{
+				Series: []*datasource.TimeSeries{
+					&datasource.TimeSeries{
 						Name: "serie 1",
 						Tags: map[string]string{
 							"key1": "value1",
 							"key2": "value2",
 						},
-						Points: []*proto.Point{&proto.Point{Timestamp: ptypes.TimestampNow(), Value: 234}},
+						Points: []*datasource.Point{&datasource.Point{Timestamp: time.Now().Unix(), Value: 234}},
 					},
 				},
 			},
@@ -46,7 +44,7 @@ func main() {
 			MagicCookieValue: "55d2200a-6492-493a-9353-73b728d468aa",
 		},
 		Plugins: map[string]plugin.Plugin{
-			"backend-datasource": &shared.TsdbPluginImpl{Plugin: &Tsdb{}},
+			"backend-datasource": &datasource.DatasourcePluginImpl{Plugin: &Tsdb{}},
 		},
 
 		// A non-nil value here enables gRPC serving for this plugin...
