@@ -1,10 +1,11 @@
 {
     "name": "Mock backend datasource",
     "id": "grafana-mock-backend-datasource",
-    "type": "backend-datasource",
+    "type": "datasource",
     
     "metrics": true,
     "annotations": false,
+    "backend": true,
     "executable": "simple-plugin",
   
     "info": {
