@@ -43,6 +43,10 @@
 
 [[override]]
   branch = "master"
+  name = "github.com/hashicorp/go-plugin"
+
+[[override]]
+  branch = "master"
   name = "github.com/Unknwon/com"
 
 [prune]
